@@ -1,0 +1,77 @@
+[
+  {
+    "type": "INITIAL",
+    "name": "cache",
+    "result": {
+      "__gummies#type__": "mock",
+      "classname": "Cache",
+      "module": "rehearser_examples.examples.example1.cache"
+    }
+  },
+  {
+    "type": "METHOD_CALL",
+    "name": "add_product",
+    "args": [
+      100,
+      "Product 100"
+    ],
+    "kwargs": {},
+    "result": null
+  },
+  {
+    "type": "METHOD_CALL",
+    "name": "add_product",
+    "args": [
+      200,
+      "Product 200"
+    ],
+    "kwargs": {},
+    "result": null
+  },
+  {
+    "type": "METHOD_CALL",
+    "name": "add_product",
+    "args": [
+      300,
+      "Product 300"
+    ],
+    "kwargs": {},
+    "result": null
+  },
+  {
+    "type": "METHOD_CALL",
+    "name": "get_product",
+    "args": [
+      100
+    ],
+    "kwargs": {},
+    "result": {
+      "__gummies#type__": "bytes",
+      "data": "Product 100"
+    }
+  },
+  {
+    "type": "METHOD_CALL",
+    "name": "get_product",
+    "args": [
+      200
+    ],
+    "kwargs": {},
+    "result": {
+      "__gummies#type__": "bytes",
+      "data": "Product 200"
+    }
+  },
+  {
+    "type": "METHOD_CALL",
+    "name": "get_product",
+    "args": [
+      300
+    ],
+    "kwargs": {},
+    "result": {
+      "__gummies#type__": "bytes",
+      "data": "Product 300"
+    }
+  }
+]
