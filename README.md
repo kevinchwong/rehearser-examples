@@ -21,14 +21,14 @@ pip install rehearser
 ```
 ---
 ### **2. Creating a Rehearser Proxy**: 
-Component to be tested : `Usage`
-External services: `ProductService` and `UserService`
+- Component to be tested : `Usage`
+- External services: `ProductService` and `UserService`
 
 ```mermaid
 graph LR
 
-Usgae["Usage"] -- uses --> ProductService["ProductService"]
-Usgae["Usage"] -- uses --> UserService["UserService"]
+Usgae["Usage"] -- uses --> ProductService["ProductService"]-- uses -->C["Cache"]
+Usgae["Usage"] -- uses --> UserService["UserService"]-- uses -->C["Cache"]
 ```
 
 - In this step, we create Rehearser Proxies for instances `ProductService()` and `UserService()`, respectively.
