@@ -128,16 +128,11 @@ class TestRehearserUsage(unittest.TestCase):
                 check_result_array[0], str.encode(f"User {i-4}"), "Result not correct"
             )
 
-        # For the behaviors that are not recorded in the interactions file, the mock object will return None
+        # For the behaviors that are not recorded in the interactions file, the mock object will raise StopIteration
         for i in range(8, 9, 1):
-            check_result_array = [mock.get_user() for mock in mocks_array]
-            print(f"{i}:{check_result_array}")
-            self.assertEqual(
-                check_result_array[1:],
-                check_result_array[:-1],
-                "All elements are not the same",
-            )
-            self.assertEqual(check_result_array[0], None, "Result not correct")
+            for mock in mocks_array:
+                with self.assertRaises(StopIteration):
+                    mock.get_user()
 
 
 if __name__ == "__main__":
