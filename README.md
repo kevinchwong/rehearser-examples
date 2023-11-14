@@ -5,10 +5,10 @@
 ```mermaid
 graph LR
 
-R["Rehearsal<br>run"]--"interactions<br>files<br>case 1"-->A1["Adjust your<br>expectation"]-->C1["Create<br>Mocks"]-->U1("Unit Tests 1")-->F["Finalize<br>Implementation"]
-R["Rehearsal<br>run"]--"interactions<br>files<br>case 2"-->A2["Adjust your<br>expectation"]-->C2["Create<br>Mocks"]-->U2("Unit Tests 2")-->F["Finalize<br>Implementation"]
-R["Rehearsal<br>run"]--"interactions<br>files<br>case ..."-->A3["Adjust your<br>expectation"]-->C3["Create<br>Mocks"]-->U3("Unit Tests ...")-->F["Finalize<br>Implementation"]
-R["Rehearsal<br>run"]--"interactions<br>files<br>case N"-->AN["Adjust your<br>expectation"]-->CN["Create<br>Mocks"]-->UN("Unit Tests N")-->F["Finalize<br>Implementation"]
+R["Rehearsal<br>run"]--"interactions<br>file<br>case 1"-->A1["Adjust your<br>expectation"]-->C1["Create<br>Mocks"]-->U1("Unit Test 1")-->F["Finalize<br>Implementation"]
+R["Rehearsal<br>run"]--"interactions<br>file<br>case 2"-->A2["Adjust your<br>expectation"]-->C2["Create<br>Mocks"]-->U2("Unit Test 2")-->F["Finalize<br>Implementation"]
+R["Rehearsal<br>run"]--"interactions<br>file<br>case ..."-->A3["Adjust your<br>expectation"]-->C3["Create<br>Mocks"]-->U3("Unit Test ...")-->F["Finalize<br>Implementation"]
+R["Rehearsal<br>run"]--"interactions<br>file<br>case N"-->AN["Adjust your<br>expectation"]-->CN["Create<br>Mocks"]-->UN("Unit Test N")-->F["Finalize<br>Implementation"]
 ```
 
 ## Steps
