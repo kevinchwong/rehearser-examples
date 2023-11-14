@@ -1,86 +1,67 @@
 # Quick Start
+- You can use Rehearser to help you build reliable unit tests quickly
 
-This is the code we wanted to test:
-```python
-def run_example(self):
-    """
-        This is the code that we want to test.
-    """
+## Development Flows:
+```mermaid
+graph LR
 
-    # Create users
-    self.user_service.add_user(1, "User 1")
-    self.user_service.add_user(2, "User 2")
-    self.user_service.add_user(3, "User 3")
-
-    # Create products
-    self.product_service.add_product(100, "Product 100")
-    self.product_service.add_product(200, "Product 200")
-    self.product_service.add_product(300, "Product 300")
-
-    # List users
-    print("Users:")
-    for user_id in range(1, 4):
-        user_data = self.user_service.get_user(user_id)
-        print(f"User ID: {user_id}, User Data: {user_data}")
-
-    # List products
-    print("Products:")
-    for product_id in range(100, 400, 100):
-        product_data = self.product_service.get_product(product_id)
-        print(f"Product ID: {product_id}, Product Data: {product_data}")
-        
-    return True
+R["Rehearsal#br#run"]--"interactions#br#files#br#case 1"-->A1["Adjust your#br#expectation"]-->C1["Create#br#Mocks"]-->U1("Unit Tests 1")-->F["Finalize#br#Implementation"]
+R["Rehearsal#br#run"]--"interactions#br#files#br#case 2"-->A2["Adjust your#br#expectation"]-->C2["Create#br#Mocks"]-->U2("Unit Tests 2")-->F["Finalize#br#Implementation"]
+R["Rehearsal#br#run"]--"interactions#br#files#br#case ..."-->A3["Adjust your#br#expectation"]-->C3["Create#br#Mocks"]-->U3("Unit Tests ...")-->F["Finalize#br#Implementation"]
+R["Rehearsal#br#run"]--"interactions#br#files#br#case N"-->AN["Adjust your#br#expectation"]-->CN["Create#br#Mocks"]-->UN("Unit Tests N")-->F["Finalize#br#Implementation"]
 ```
 
-## **Installation**:
-
+## Steps
+### **1. Installation**:
 ```bash
 pip install rehearser
 ```
 
-## **Creating a Rehearser Proxy**: 
+### **2. Creating a Rehearser Proxy**: 
+- Class to be tested : `Usage`
+- `Usage` uses `ProductService` and `UserService`
 
+```mermaid
+graph LR
+
+Usgae["Usage"] -- uses --> ProductService["ProductService"]
+Usgae["Usage"] -- uses --> UserService["UserService"]
+```
+
+- In this step, we create Rehearser Proxies for instances `ProductService()` and `UserService()`, respectively.
 ```python
 from rehearser import RehearserProxy
 from examples.example1.usage import ProductService, UserService
 
-product_service = ProductService()
-user_service = UserService()
-
-rp_product = RehearserProxy(product_service)
-rp_user = RehearserProxy(user_service)
+rp_product = RehearserProxy(ProductService())
+rp_user = RehearserProxy(UserService())
 ```
 
-In this example, `rp_product` and `rp_user` serve as proxies for `product_service` and `user_service`, respectively.
-
-## **Generate Interactions**: 
-The following code shows how to generate mock objects using the interaction files created in the previous step.
+### **3. Generate Interactions**: 
+Generate mock objects using the interactions created in the previous step.
 ```python
-@patch(
-    "rehearser_examples.examples.example1.usage.UserService",
-    return_value=RehearserProxy(UserService(Cache())),
-)
-@patch(
-    "rehearser_examples.examples.example1.usage.ProductService",
-    return_value=RehearserProxy(ProductService(Cache())),
-)
-def test_rehearser_run_example(
-    self, rp_product: Any, rp_user: Any
-) -> None:
-
+# Apply patches to UserService and ProductService
+with patch(
+    "rehearser.examples.example1.usage.UserService",
+    return_value=rp_user,
+), patch(
+    "rehearser.examples.example1.usage.ProductService",
+    return_value=rp_product,
+):
     # Rehearsal run
-    result = Usage().run_example()
+    Usage().run_example()
 
     # Generate interactions files
     rp_user.set_interactions_file_directory("./raw_files/rehearser_proxy/")
     rp_user.write_interactions_to_file()
+
     rp_product.set_interactions_file_directory("./raw_files/rehearser_proxy/")
     rp_product.write_interactions_to_file()
 
 ```
 
-## **Test with Generated Mock using Interaction Files**:
-Run your unit test patched with mocks now.
+### **4. Write Unit Test**:
+Run your unit test with patched mocks now.
 ```python
 # Instantiate mock objects
 mock_users = MockGenerator(
@@ -92,10 +73,10 @@ mock_products = MockGenerator(
 
 # Apply patches to UserService and ProductService
 with patch(
-    "rehearser_examples.examples.example1.usage.UserService",
+    "rehearser.examples.example1.usage.UserService",
     return_value=mock_users,
 ), patch(
-    "rehearser_examples.examples.example1.usage.ProductService",
+    "rehearser.examples.example1.usage.ProductService",
     return_value=mock_products,
 ):
     # Instantiate Usage with the mocked services
