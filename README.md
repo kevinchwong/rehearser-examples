@@ -38,7 +38,7 @@ rp_user = RehearserProxy(UserService())
 ```
 ---
 ### **3. Generate Interactions**: 
-Generate mock objects using the interactions created in the previous step.
+Generate mock objects using the interactions created in the previous step:
 ```python
 # Apply patches to UserService and ProductService
 with patch(
@@ -62,7 +62,7 @@ with patch(
 - Notes: The interaction files are in json format, and you can adjust these thru editor manually before using these for further Mock object generation.
 ---
 ### **4. Write Unit Test**:
-These will be your unit test body:
+Unit test body:
 ```python
 # Instantiate mock objects
 mock_users = MockGenerator(
