@@ -27,8 +27,8 @@ pip install rehearser
 ```mermaid
 graph LR
 
-Usage["Usage"] -- uses --> ProductService["ProductService"]-- uses -->C["Cache"]
-Usage["Usage"] -- uses --> UserService["UserService"]-- uses -->C["Cache"]
+Usage["Usage<br>(Code to be tested here)"] -- uses --> ProductService["ProductService<br>(Add RehearserProxy here)"]-- uses -->C["Cache"]
+Usage -- uses --> UserService["UserService<br>(Add RehearserProxy here)"]-- uses -->C["Cache"]
 ```
 
 - In this step, we create Rehearser Proxies for instances `ProductService()` and `UserService()`, respectively.
