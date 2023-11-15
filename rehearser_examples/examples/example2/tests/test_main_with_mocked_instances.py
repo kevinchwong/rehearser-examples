@@ -39,7 +39,7 @@ mock = MockGenerator(
     interactions_src="./rehearser_examples/examples/example2/tests/raw_files/ExternalService/latest_interactions.json"
 ).create_mock()
 with patch("__main__.ExternalService", return_value=mock):
-    # Replay the long time running method output with the mocked method
+    # Replay the external service output with the mocked object
     service = ExternalService()
     print(f"type of mocked service: {type(service)}")
     a = service.long_run_method(1)
