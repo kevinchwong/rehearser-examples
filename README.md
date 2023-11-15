@@ -57,7 +57,7 @@ mock = MockGenerator(
     interactions_src="./rehearser_examples/examples/example1/tests/raw_files/long_run_method/latest_interactions.json"
 ).create_mock()
 with patch("__main__.long_run_method", mock):
-    # Replay the external service output with the mocked object
+    # Replay the long time running method output with the mocked method
     a=long_run_method(1)
     b=long_run_method(2)
     c=long_run_method(3)
@@ -115,7 +115,7 @@ mock = MockGenerator(
     interactions_src="./rehearser_examples/examples/example2/tests/raw_files/ExternalService/latest_interactions.json"
 ).create_mock()
 with patch("__main__.ExternalService", return_value=mock):
-    # Replay the long time running method output with the mocked method
+    # Replay the external service output with the mocked object
     service = ExternalService()
     a = service.long_run_method(1)
     b = service.long_run_method(2)
