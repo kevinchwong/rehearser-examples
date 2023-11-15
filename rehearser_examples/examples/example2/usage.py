@@ -1,5 +1,5 @@
-from rehearser_examples.examples.example1.services.product_service import ProductService
-from rehearser_examples.examples.example1.services.user_service import UserService
+from rehearser_examples.examples.example2.services.product_service import ProductService
+from rehearser_examples.examples.example2.services.user_service import UserService
 
 class Usage:
     

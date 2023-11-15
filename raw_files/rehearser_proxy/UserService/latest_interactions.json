@@ -1,0 +1,77 @@
+[
+  {
+    "type": "INITIAL",
+    "name": "cache",
+    "result": {
+      "__gummies#type__": "mock",
+      "classname": "Cache",
+      "module": "rehearser_examples.examples.example2.cache"
+    }
+  },
+  {
+    "type": "INSTANCE_METHOD_CALL",
+    "name": "add_user",
+    "args": [
+      1,
+      "User 1"
+    ],
+    "kwargs": {},
+    "result": null
+  },
+  {
+    "type": "INSTANCE_METHOD_CALL",
+    "name": "add_user",
+    "args": [
+      2,
+      "User 2"
+    ],
+    "kwargs": {},
+    "result": null
+  },
+  {
+    "type": "INSTANCE_METHOD_CALL",
+    "name": "add_user",
+    "args": [
+      3,
+      "User 3"
+    ],
+    "kwargs": {},
+    "result": null
+  },
+  {
+    "type": "INSTANCE_METHOD_CALL",
+    "name": "get_user",
+    "args": [
+      1
+    ],
+    "kwargs": {},
+    "result": {
+      "__gummies#type__": "bytes",
+      "data": "User 1"
+    }
+  },
+  {
+    "type": "INSTANCE_METHOD_CALL",
+    "name": "get_user",
+    "args": [
+      2
+    ],
+    "kwargs": {},
+    "result": {
+      "__gummies#type__": "bytes",
+      "data": "User 2"
+    }
+  },
+  {
+    "type": "INSTANCE_METHOD_CALL",
+    "name": "get_user",
+    "args": [
+      3
+    ],
+    "kwargs": {},
+    "result": {
+      "__gummies#type__": "bytes",
+      "data": "User 3"
+    }
+  }
+]

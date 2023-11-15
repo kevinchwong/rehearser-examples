@@ -2,7 +2,7 @@ import unittest
 from typing import Any
 from unittest.mock import call, patch
 
-from rehearser_examples.examples.example1.usage import Usage
+from rehearser_examples.examples.example2.usage import Usage
 from rehearser.mock_generator import MockGenerator
 
 
@@ -25,10 +25,10 @@ class UsageTestCaseWithPatch(unittest.TestCase):
 
         # Patch UserService and ProductService in Usage
         with patch(
-            "rehearser_examples.examples.example1.usage.UserService",
+            "rehearser_examples.examples.example2.usage.UserService",
             return_value=mock_users,
         ), patch(
-            "rehearser_examples.examples.example1.usage.ProductService",
+            "rehearser_examples.examples.example2.usage.ProductService",
             return_value=mock_products,
         ):
             # Create Usage instance with mock services

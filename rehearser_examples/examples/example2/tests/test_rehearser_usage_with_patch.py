@@ -3,9 +3,9 @@ from typing import Any
 from unittest.mock import patch
 
 from rehearser.rehearser_proxy import RehearserProxy
-from rehearser_examples.examples.example1.services.product_service import ProductService
-from rehearser_examples.examples.example1.services.user_service import UserService
-from rehearser_examples.examples.example1.usage import Usage
+from rehearser_examples.examples.example2.services.product_service import ProductService
+from rehearser_examples.examples.example2.services.user_service import UserService
+from rehearser_examples.examples.example2.usage import Usage
 
 
 class TestRehearserUsageWithPatch(unittest.TestCase):
@@ -22,10 +22,10 @@ class TestRehearserUsageWithPatch(unittest.TestCase):
         rp_user = RehearserProxy(UserService())
 
         with patch(
-            "rehearser_examples.examples.example1.usage.UserService",
+            "rehearser_examples.examples.example2.usage.UserService",
             return_value=rp_user,
         ), patch(
-            "rehearser_examples.examples.example1.usage.ProductService",
+            "rehearser_examples.examples.example2.usage.ProductService",
             return_value=rp_product,
         ):
             u = Usage()

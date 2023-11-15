@@ -15,12 +15,47 @@ R["Rehearsal<br>runs"]--"interactions<br>file<br>case N"-->AN["Adjust your<br>ex
 
 ---
 
-### **1. Install Rehearser**:
+### **Install Rehearser**:
 ```bash
 pip install rehearser
 ```
 ---
-### **2. Creating a Rehearser Proxy**: 
+### **Example 1: Mock a method:**
+```
+from unittest.mock import Mock, patch
+
+from rehearser.mock_generator import MockGenerator
+from rehearser.rehearser_method import RehearserMethod
+
+
+def main_method(i):
+    print(f"Main! -> {i}")
+    return i
+
+# Rehersal
+rm = RehearserMethod(main_method)
+with patch("__main__.main_method", rm.get_proxy_method()):
+    main_method(1)
+    main_method(2)
+    main_method(3)
+
+rm.set_interactions_file_directory("./rehearser_examples/examples/example2/tests/raw_files/")
+rm.write_interactions_to_file()
+
+# Unit test
+mg = MockGenerator(rm.get_interactions())
+m1 = mg.create_mock()
+with patch("__main__.main_method", m1):
+    assert(main_method(), 1)
+    assert(main_method(), 2)
+    assert(main_method(), 3)
+```
+
+---
+
+### **Example 2: Mock an instance**:
+
+#### **1. Creating a Rehearser Proxy**: 
 - Component to be tested : `Usage`
 - External services: `ProductService` , `UserService` and `Cache`
 
@@ -37,15 +72,15 @@ rp_product = RehearserProxy(ProductService())
 rp_user = RehearserProxy(UserService())
 ```
 ---
-### **3. Generate Interactions**: 
+#### **2. Generate Interactions**: 
 Generate mock objects using the interactions created in the previous step:
 ```python
 # Apply patches to UserService and ProductService
 with patch(
-    "rehearser_examples.examples.example1.usage.UserService",
+    "rehearser_examples.examples.example2.usage.UserService",
     return_value=rp_user,
 ), patch(
-    "rehearser_examples.examples.example1.usage.ProductService",
+    "rehearser_examples.examples.example2.usage.ProductService",
     return_value=rp_product,
 ):
     # Rehearsal run
@@ -61,7 +96,7 @@ with patch(
 ```
 - Notes: The interaction files are in json format, and you can adjust these thru editor manually before using these for further Mock object generation.
 ---
-### **4. Write Unit Test**:
+#### **3. Write Unit Test**:
 ```mermaid
 graph LR
 
@@ -80,10 +115,10 @@ mock_products = MockGenerator(
 
 # Apply patches to UserService and ProductService
 with patch(
-    "rehearser_examples.examples.example1.usage.UserService",
+    "rehearser_examples.examples.example2.usage.UserService",
     return_value=mock_users,
 ), patch(
-    "rehearser_examples.examples.example1.usage.ProductService",
+    "rehearser_examples.examples.example2.usage.ProductService",
     return_value=mock_products,
 ):
     # Instantiate Usage with the mocked services

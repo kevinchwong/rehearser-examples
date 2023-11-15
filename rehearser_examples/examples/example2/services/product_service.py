@@ -1,4 +1,4 @@
-from rehearser_examples.examples.example1.cache import Cache
+from rehearser_examples.examples.example2.cache import Cache
 
 
 class ProductService:
