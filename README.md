@@ -21,109 +21,114 @@ pip install rehearser
 ```
 ---
 ### **Example 1: Mock a method:**
-```
+```python
 from unittest.mock import Mock, patch
 
 from rehearser.mock_generator import MockGenerator
 from rehearser.rehearser_method import RehearserMethod
 
 
-def main_method(i):
-    print(f"Main! -> {i}")
-    return i
+def long_run_method(x):
+    print(f"Take a long time to run in {x*x} days...")
+    return x*x
 
-# Rehersal
-rm = RehearserMethod(main_method)
-with patch("__main__.main_method", rm.get_proxy_method()):
-    main_method(1)
-    main_method(2)
-    main_method(3)
 
-rm.set_interactions_file_directory("./rehearser_examples/examples/example2/tests/raw_files/")
-rm.write_interactions_to_file()
+# Run a Rehearsal
+rehearser = RehearserMethod(long_run_method)
+with patch("__main__.long_run_method", rehearser.get_proxy_method()):
+    a=long_run_method(1)
+    b=long_run_method(2)
+    c=long_run_method(3)
+    
+    # Your logic
+    res = a + b + c
+    print(res)
+
+
+# Prepare interactions files
+rehearser.set_interactions_file_directory(
+    "./rehearser_examples/examples/example1/tests/raw_files/"
+)
+rehearser.write_interactions_to_file()
+
 
 # Unit test
-mg = MockGenerator(rm.get_interactions())
-m1 = mg.create_mock()
-with patch("__main__.main_method", m1):
-    assert(main_method(), 1)
-    assert(main_method(), 2)
-    assert(main_method(), 3)
+mock = MockGenerator(
+    interactions_src="./rehearser_examples/examples/example1/tests/raw_files/long_run_method/latest_interactions.json"
+).create_mock()
+with patch("__main__.long_run_method", mock):
+    # Replay the long time running method output with the mocked method
+    a=long_run_method(1)
+    b=long_run_method(2)
+    c=long_run_method(3)
+    
+    # Your logic to be tested:
+    result = a + b + c
+
+    print(f"Result from mockers: {result} where mocked a={a}, mocked b={b}, and mocked c={c}")
+    # Verify the result
+    assert res == 14
 ```
 
 ---
 
 ### **Example 2: Mock an instance**:
 
-#### **1. Creating a Rehearser Proxy**: 
-- Component to be tested : `Usage`
-- External services: `ProductService` , `UserService` and `Cache`
-
-```mermaid
-graph LR
-
-Usage["Usage<br>(Code to be tested here)"] -- uses --> ProductService["ProductService<br>(Add RehearserProxy here)"]-- uses -->C["Cache"]
-Usage -- uses --> UserService["UserService<br>(Add RehearserProxy here)"]-- uses -->C["Cache"]
-```
-
-- In this step, we create Rehearser Proxies for instances `ProductService()` and `UserService()`, respectively.
 ```python
-rp_product = RehearserProxy(ProductService())
-rp_user = RehearserProxy(UserService())
-```
----
-#### **2. Generate Interactions**: 
-Generate mock objects using the interactions created in the previous step:
-```python
-# Apply patches to UserService and ProductService
-with patch(
-    "rehearser_examples.examples.example2.usage.UserService",
-    return_value=rp_user,
-), patch(
-    "rehearser_examples.examples.example2.usage.ProductService",
-    return_value=rp_product,
-):
-    # Rehearsal run
-    Usage().run_example()
+from unittest.mock import Mock, patch
 
-    # Generate interactions files
-    rp_user.set_interactions_file_directory("./raw_files/rehearser_proxy/")
-    rp_user.write_interactions_to_file()
+from rehearser.mock_generator import MockGenerator
+from rehearser.rehearser_proxy import RehearserProxy
 
-    rp_product.set_interactions_file_directory("./raw_files/rehearser_proxy/")
-    rp_product.write_interactions_to_file()
 
-```
-- Notes: The interaction files are in json format, and you can adjust these thru editor manually before using these for further Mock object generation.
----
-#### **3. Write Unit Test**:
-```mermaid
-graph LR
+class ExternalService:
+    def __init__(self):
+        pass
 
-Usage["Usage<br>(Code to be tested here)"] -- uses --> ProductService["ProductService<br>(Mocked)"]
-Usage -- uses --> UserService["UserService<br>(Mocked)"]
-```
-Unit test body:
-```python
-# Instantiate mock objects
-mock_users = MockGenerator(
-    interactions_src="./raw_files/rehearser_proxy/UserService/latest_interactions.json"
+    def long_run_method(self, x):
+        print(f"Take a long time to run in {x*x} days...")
+        return x * x
+
+
+# Run a Rehearsal
+rehearser = RehearserProxy(ExternalService())
+with patch("__main__.ExternalService", return_value=rehearser):
+    service = ExternalService()
+    a = service.long_run_method(1)
+    b = service.long_run_method(2)
+    c = service.long_run_method(3)
+
+    # Your logic
+    res = a + b + c
+    print(res)
+
+
+# Prepare interactions files
+rehearser.set_interactions_file_directory(
+    "./rehearser_examples/examples/example2/tests/raw_files/"
+)
+rehearser.write_interactions_to_file()
+
+
+# Unit test
+mock = MockGenerator(
+    interactions_src="./rehearser_examples/examples/example2/tests/raw_files/ExternalService/latest_interactions.json"
 ).create_mock()
-mock_products = MockGenerator(
-    interactions_src="./raw_files/rehearser_proxy/ProductService/latest_interactions.json"
-).create_mock()
+with patch("__main__.ExternalService", return_value=mock):
+    # Replay the long time running method output with the mocked method
+    service = ExternalService()
+    a = service.long_run_method(1)
+    b = service.long_run_method(2)
+    c = service.long_run_method(3)
 
-# Apply patches to UserService and ProductService
-with patch(
-    "rehearser_examples.examples.example2.usage.UserService",
-    return_value=mock_users,
-), patch(
-    "rehearser_examples.examples.example2.usage.ProductService",
-    return_value=mock_products,
-):
-    # Instantiate Usage with the mocked services
-    result = Usage().run_example()
+    # Your logic to be tested:
+    result = a + b + c
 
-    # Insert your test assertions here
-    self.assertTrue(result, "run_example() failed")
+    print(
+        f"Result from mockers: {result} where mocked a={a}, mocked b={b}, and mocked c={c}"
+    )
+    # Verify the result
+    assert res == 14
+
+
 ```

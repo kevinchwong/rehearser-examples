@@ -1,4 +1,4 @@
-from rehearser_examples.examples.example2.cache import Cache
+from rehearser_examples.examples.example3.cache import Cache
 
 
 class UserService:
