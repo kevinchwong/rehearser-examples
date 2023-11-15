@@ -62,6 +62,12 @@ with patch(
 - Notes: The interaction files are in json format, and you can adjust these thru editor manually before using these for further Mock object generation.
 ---
 ### **4. Write Unit Test**:
+```mermaid
+graph LR
+
+Usage["Usage<br>(Code to be tested here)"] -- uses --> ProductService["ProductService<br>(Mocked)"]
+Usage -- uses --> UserService["UserService<br>(Mocked)"]
+```
 Unit test body:
 ```python
 # Instantiate mock objects
