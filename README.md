@@ -1,9 +1,10 @@
 # Quick Start
 You can use `Rehearser` to build reliable unit tests quickly
 
-- Reference:
+----
+### Tutorials:
   - [Introduction](https://medium.com/@kevinchwong/unveiling-rehearser-revolutionize-your-python-unit-tests-d53eaa809d23)
-  - [Tutorial](https://medium.com/@kevinchwong/unlock-the-secrets-of-efficient-python-testing-with-rehearser-2b967f16c706)
+  - [Step-by-step](https://medium.com/@kevinchwong/unlock-the-secrets-of-efficient-python-testing-with-rehearser-2b967f16c706)
 ----
 
 ### Development Flow:
