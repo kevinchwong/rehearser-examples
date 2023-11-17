@@ -22,9 +22,7 @@ with patch("__main__.long_run_method", rehearser.get_proxy_method()):
 
 
 # Prepare interactions files
-rehearser.set_interactions_file_directory(
-    "./rehearser_examples/examples/example1/tests/raw_files/"
-)
+rehearser.interactions_file_directory="./rehearser_examples/examples/example1/tests/raw_files/"
 rehearser.write_interactions_to_file()
 
 

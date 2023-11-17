@@ -20,11 +20,7 @@ with patch(
     u.run_example()
 
     # Generate interaction files
-    u.user_service.set_interactions_file_directory(
-        "./rehearser_examples/examples/example3/tests/raw_files/rehearser_proxy/"
-    )
+    u.user_service.interactions_file_directory="./rehearser_examples/examples/example3/tests/raw_files/rehearser_proxy/"
     u.user_service.write_interactions_to_file()
-    u.product_service.set_interactions_file_directory(
-        "./rehearser_examples/examples/example3/tests/raw_files/rehearser_proxy/"
-    )
+    u.product_service.interactions_file_directory="./rehearser_examples/examples/example3/tests/raw_files/rehearser_proxy/"
     u.product_service.write_interactions_to_file()

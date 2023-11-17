@@ -1,4 +1,4 @@
 pytest
 redis
-rehearser
+rehearser>=0.1.16
 types-redis

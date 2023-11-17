@@ -28,9 +28,7 @@ with patch("__main__.ExternalService", return_value=rehearser):
 
 
 # Prepare interactions files
-rehearser.set_interactions_file_directory(
-    "./rehearser_examples/examples/example2/tests/raw_files/"
-)
+rehearser.interactions_file_directory="./rehearser_examples/examples/example2/tests/raw_files/"
 rehearser.write_interactions_to_file()
 
 
