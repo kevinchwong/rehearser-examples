@@ -21,7 +21,7 @@ R["Rehearsal<br>runs"]--"interactions<br>file<br>case N"-->AN["Adjust your<br>ex
 
 ### **Install Rehearser**:
 ```bash
-pip install rehearser
+pip install -U rehearser
 ```
 ---
 ### **Example 1: Mock a method:**
@@ -39,7 +39,7 @@ def long_run_method(x):
 
 # Run a Rehearsal
 rehearser = RehearserMethod(long_run_method)
-with patch("__main__.long_run_method", rehearser.get_proxy_method()):
+with patch("__main__.long_run_method", rehearser):
     a=long_run_method(1)
     b=long_run_method(2)
     c=long_run_method(3)

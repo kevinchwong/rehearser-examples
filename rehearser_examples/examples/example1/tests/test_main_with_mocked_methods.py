@@ -11,7 +11,8 @@ def long_run_method(x):
 
 # Run a Rehearsal
 rehearser = RehearserMethod(long_run_method)
-with patch("__main__.long_run_method", rehearser.get_proxy_method()):
+rehearser.interactions_file_directory="./rehearser_examples/examples/example1/tests/raw_files/"
+with patch("__main__.long_run_method", rehearser):
     a=long_run_method(1)
     b=long_run_method(2)
     c=long_run_method(3)
